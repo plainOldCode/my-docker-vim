@@ -1,1 +1,1 @@
-docker build --tag=myenv .
+docker build --tag=my-docker-vim .
