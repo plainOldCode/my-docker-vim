@@ -38,6 +38,13 @@ USER $UNAME
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 ADD zshrc $HOME/.zshrc
 
+# Update powerline fonts
+RUN mkdir -p $HOME/.fonts $HOME/.config/fontconfig/conf.d && \
+    wget -P $HOME/.fonts                     https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf && \
+    wget -P $HOME/.config/fontconfig/conf.d/ https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf && \
+    fc-cache -vf $HOME/.fonts/ && \
+    echo "set guifont=Droid\\ Sans\\ Mono\\ 10"
+
 # Build vim
 RUN git clone https://github.com/vim/vim.git
 RUN cd vim && \
@@ -57,25 +64,23 @@ USER root
 RUN cd vim && make install
 USER $UNAME
 
+## Install geeknote
+RUN git clone git://github.com/jeffkowalski/geeknote.git
+USER root
+RUN cd geeknote && \
+	python setup.py build && \
+	pip install --upgrade .
+USER $UNAME
+
 # UPDATE vimrc
 ADD vimrc $HOME/.vimrc
-RUN mkdir -p $HOME/.vim/bundle                                                                  && \
-    cd  $HOME/.vim/bundle                                                                       && \
+RUN mkdir -p $HOME/.vim/bundle && \
+    cd  $HOME/.vim/bundle && \
     # Get vim plugins
-    git clone https://github.com/gmarik/Vundle.vim.git                                      && \
-    vim +PluginInstall +qall                                                                && \
+    git clone https://github.com/gmarik/Vundle.vim.git && \
+    vim +PluginInstall +qall && \
+	rm -rf vim-geeknote && \
+	git clone https://github.com/neilagabriel/vim-geeknote.git && \
     git config --global core.editor vim
 
-## Install geeknote
-#RUN git clone git://github.com/jeffkowalski/geeknote.git
-#RUN cd geeknote && \
-#	python setup.py build && \
-#	pip install --upgrade .
-#
-# Update powerline fonts
-RUN mkdir -p $HOME/.fonts $HOME/.config/fontconfig/conf.d && \
-    wget -P $HOME/.fonts                     https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf && \
-    wget -P $HOME/.config/fontconfig/conf.d/ https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf && \
-    fc-cache -vf $HOME/.fonts/ && \
-    echo "set guifont=Droid\\ Sans\\ Mono\\ 10"
 

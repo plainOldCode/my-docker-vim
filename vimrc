@@ -21,7 +21,7 @@ Plugin 'junegunn/goyo.vim'
 "Plugin 'fatih/vim-go'
 "Plugin 'tomlion/vim-solidity'
 "Plugin 'prettier/vim-prettier'
-" Plugin 'vim-geeknote'
+Plugin 'vim-geeknote'
 call vundle#end()            " required
 
 filetype plugin indent on 
@@ -55,5 +55,5 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 nnoremap <C-F> :NERDTreeToggle<CR>
-"nnoremap <C-G> :Geeknote<CR>
+nnoremap <C-G> :Geeknote<CR>
 
