@@ -92,3 +92,13 @@ RUN mkdir -p $HOME/.vim/bundle && \
 
 ENV EVERNOTE_DEV_TOKEN dummy
 RUN geeknote login
+
+USER root
+ENV NODE_VERSION 11.4.0
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash && \
+ 	. $HOME/.nvm/nvm.sh && \
+    nvm install $NODE_VERSION && \
+    nvm alias default $NODE_VERSION && \
+    nvm use default
+
+USER $UNAME
