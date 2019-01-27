@@ -14,8 +14,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'crusoexia/vim-monokai'
 Plugin 'junegunn/goyo.vim'
-"Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"lugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/fzf.vim'
 "lugin 'MattesGroeger/vim-bookmarks'
 "Plugin 'christoomey/vim-tmux-navigator'
 "Plugin 'fatih/vim-go'

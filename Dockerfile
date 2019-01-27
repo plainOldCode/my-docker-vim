@@ -16,6 +16,7 @@ RUN apt-get install -y --no-install-recommends \
     make \
 	wget curl file \
 	fontconfig locales \
+	silversearcher-ag \
 	zsh
 
 RUN apt-get install -y python-setuptools python-pip && pip install wheel
@@ -44,6 +45,12 @@ RUN mkdir -p $HOME/.fonts $HOME/.config/fontconfig/conf.d && \
     wget -P $HOME/.config/fontconfig/conf.d/ https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf && \
     fc-cache -vf $HOME/.fonts/ && \
     echo "set guifont=Droid\\ Sans\\ Mono\\ 10"
+
+USER root
+# Update fzf
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && \
+	~/.fzf/install
+USER $UNAME
 
 # Build vim
 RUN git clone https://github.com/vim/vim.git
@@ -83,5 +90,5 @@ RUN mkdir -p $HOME/.vim/bundle && \
 	git clone https://github.com/neilagabriel/vim-geeknote.git && \
     git config --global core.editor vim
 
-ENV EVERNOTE_DEV_TOKEN
+ENV EVERNOTE_DEV_TOKEN dummy
 RUN geeknote login
