@@ -83,4 +83,5 @@ RUN mkdir -p $HOME/.vim/bundle && \
 	git clone https://github.com/neilagabriel/vim-geeknote.git && \
     git config --global core.editor vim
 
-
+ENV EVERNOTE_DEV_TOKEN
+RUN geeknote login
