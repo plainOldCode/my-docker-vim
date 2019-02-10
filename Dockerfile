@@ -63,7 +63,8 @@ RUN cd vim && \
 	    --enable-perlinterp=yes \
 	    --enable-luainterp=yes \
         --enable-cscope \
-	    --prefix=/usr/local && \
+	    --prefix=/usr/local \
+		--enable-gui=auto --enable-gtk2-check --with-x && \
 	make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
 
 # Install vim
@@ -90,9 +91,6 @@ RUN mkdir -p $HOME/.vim/bundle && \
 	git clone https://github.com/neilagabriel/vim-geeknote.git && \
     git config --global core.editor vim
 
-ENV EVERNOTE_DEV_TOKEN dummy
-RUN geeknote login
-
 USER root
 ENV NODE_VERSION 11.4.0
 RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash && \
@@ -102,3 +100,7 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.s
     nvm use default
 
 USER $UNAME
+
+ENV EVERNOTE_DEV_TOKEN dummy
+RUN geeknote login
+
